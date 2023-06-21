@@ -1,0 +1,55 @@
+.timer{
+  background-color:#eee;
+  margin:30px;
+  height:50vh;
+}
+.inactivebutton{
+  background-color:white;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+  border-radius:10px;
+  color:#f5ba13;
+  border:0;
+}
+.activebutton{
+  background-color:#f5ba13;
+  color:white;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+  border-radius:10px;
+  border:0;
+}
+.taskitem{
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+  background-color:white;
+  margin:auto;
+  border-radius:10px;
+  width:90vw;
+  height:23vh;
+  display:flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.taskitem div{
+  width:40%;
+  text-align: center;
+  display:flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height:100%;
+  align-items: center;
+}
+.taskitem button{
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+  background-color:#f5ba13;
+  border-radius:30px;
+    color:white;
+    border:0;
+    height:60px;
+    width:150px;
+    transition:0.3s;
+}
+.taskitem button:hover{
+  transform: scale(1.3);
+}
+.taskitem p{ 
+  font-size: 19px;
+}
