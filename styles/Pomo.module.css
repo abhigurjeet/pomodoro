@@ -1,22 +1,53 @@
 .timer{
   background-color:#eee;
-  margin:30px;
+  margin:30px auto;
   height:50vh;
+  width:50vw;
+  text-align: center;
+}
+.timer h1{
+  font-size: 100px;
+  color:#1da09c;
+  text-shadow:2px 2px 10px rgba(0, 0, 0, 0.3);
+  margin-top:100px;
+}
+.timernavbar{
+  display:flex;
+  height:40px;
+  justify-content:space-evenly;
+}
+.timernavbar button{
+  font-size: 15px;
 }
 .inactivebutton{
   background-color:white;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
-  border-radius:10px;
   color:#f5ba13;
   border:0;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+  border-radius:10px;
+  width:33%;
 }
 .activebutton{
   background-color:#f5ba13;
   color:white;
+  border:0;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
   border-radius:10px;
-  border:0;
+  width:33%;
 }
+.buttonsection{
+  width:60%;
+  display:flex;
+  justify-content: space-evenly;
+  margin:auto;
+}
+.buttonsection > button {
+  border: 0;
+  border-radius: 50%;
+  font-size: 50px;
+  margin-top: 50px;
+}
+
 .taskitem{
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
   background-color:white;
@@ -27,6 +58,7 @@
   display:flex;
   justify-content: space-evenly;
   align-items: center;
+  word-wrap: break-word; 
 }
 .taskitem div{
   width:40%;
@@ -36,6 +68,21 @@
   justify-content: space-evenly;
   height:100%;
   align-items: center;
+}
+.taskitem div p{
+  max-height: 130px; /* Set the maximum height */
+overflow: auto; 
+}
+.taskitem div p::-webkit-scrollbar {
+  width: 8px; /* Set the width of the scrollbar */
+}
+
+.taskitem div p::-webkit-scrollbar-thumb {
+  background-color: transparent; /* Set the scrollbar thumb color to transparent */
+}
+
+.taskitem div p::-webkit-scrollbar-track {
+  background-color: transparent; /* Set the scrollbar track color to transparent */
 }
 .taskitem button{
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
@@ -52,4 +99,46 @@
 }
 .taskitem p{ 
   font-size: 19px;
+}
+@media (max-width: 700px) {
+  .timer{
+    background-color:#eee;
+    margin:30px auto 0;
+    height:50vh;
+    width:90vw;
+    text-align: center;
+  }
+  .timer h1{
+    margin-top:100px auto 30px;
+  }
+  .buttonsection{
+    width:100%;
+    display:flex;
+    justify-content: space-evenly;
+    margin: auto;
+  }
+  .taskitem{
+    margin-top:0;
+    display:flex;
+    flex-direction: column;
+    height:100%;
+    justify-content: space-evenly;
+    align-items: center;
+    padding:10px;
+    word-wrap: break-word; 
+    height:30vh;
+  }
+  .taskitem div{
+    width:100%;
+  }
+  .taskitem div p{
+    max-height: 130px; /* Set the maximum height */
+  overflow: auto; 
+  }
+  .taskitem div button{
+    height:40px;
+  }
+  .taskitem div span{
+    font-size:18px;
+  }
 }

@@ -5,14 +5,12 @@ import { HiCheckCircle } from "react-icons/hi";
 import styles from "@/styles/Pomo.module.css";
 export default function ActiveTask() {
   const { activeTask, taskList, action } = useContext(TaskContext);
-  const [taskActive, setTaskActive] = useState(activeTask === -1);
   const handleSubmit = (e) => {
     action.setActiveTask(-1, "Completed");
-    setTaskActive(-1);
   };
   return (
     <div className={styles.taskitem}>
-      {taskActive ? (
+      {activeTask === -1 ? (
         <h1>Add a task to start Timer</h1>
       ) : (
         <>
@@ -22,7 +20,7 @@ export default function ActiveTask() {
             <span>Due Date: {taskList[activeTask].dueDate}</span>
           </div>
           <div>
-            <p>Tomato: {taskList[activeTask].tomato}</p>
+            <span>Tomato: {taskList[activeTask].tomato}</span>
             <Link href="/task">
               <button type="submit" onClick={handleSubmit}>
                 <HiCheckCircle />

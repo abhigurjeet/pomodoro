@@ -32,3 +32,20 @@
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
     border-radius:10px;
 }
+@media (max-width: 700px) {
+    .analytics{
+        display:block;
+        height:100%;
+    } 
+    .statsbox{
+        height:20vh;
+        width:80%;
+        margin:10px auto;
+        font-size: 10px;
+    }
+    .bar{
+        width:85vw;
+        height:40vh;
+        margin:10px auto;
+    }
+}

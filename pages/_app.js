@@ -27,6 +27,15 @@ export default function App({ Component, pageProps }) {
         taskStatus: "Completed",
       },
     ],
+    todayTomato: {
+      count: 0,
+      date: new Date(
+        new Date().getFullYear(),
+        new Date().getMonth(),
+        new Date().getDate()
+      ),
+    },
+    weeklyTomato: [0, 0, 0, 0, 0, 3, 0],
     activeTask: -1,
     filters: {
       taskStat: "",
@@ -34,9 +43,9 @@ export default function App({ Component, pageProps }) {
       sortday: "",
     },
     timerSettings: {
-      pomodoro: { time: 0.1 * 60, completed: false, active: true },
+      pomodoro: { time: 25 * 60, completed: false, active: true },
       shortBreak: { time: 5 * 60, completed: false, active: false },
-      longBreak: { time: 20 * 60, completed: false, active: false },
+      longBreak: { time: 15 * 60, completed: false, active: false },
     },
     action: {
       addtask: (item) => {
@@ -80,10 +89,32 @@ export default function App({ Component, pageProps }) {
       },
       incrementTomato: () => {
         setTaskData((prev) => {
-          let temp = [...prev.taskList];
+          let diff = Math.floor(
+            (new Date() - prev.todayTomato.date) / (24 * 60 * 60 * 1000)
+          );
+          let temp = [...prev.taskList],
+            temp2 = { ...prev.todayTomato },
+            temp3 = [...prev.weeklyTomato];
+          if (diff === 0) {
+            temp2.count = temp2.count + 1;
+            temp3[0] = temp3[0] + 1;
+          } else {
+            temp2.date = new Date(
+              new Date().getFullYear(),
+              new Date().getMonth(),
+              new Date().getDate()
+            );
+            temp3.splice(6, 1);
+            temp3.unshift(1);
+            temp2.count = 1;
+          }
           temp[prev.activeTask].tomato = temp[prev.activeTask].tomato + 1;
-          console.log("triggered2");
-          return { ...prev, taskList: temp };
+          return {
+            ...prev,
+            taskList: temp,
+            todayTomato: temp2,
+            weeklyTomato: temp3,
+          };
         });
       },
       updateTimerStatus: (val) => {
