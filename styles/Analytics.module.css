@@ -41,7 +41,11 @@
         height:20vh;
         width:80%;
         margin:10px auto;
-        font-size: 10px;
+        font-size:70%;
+        justify-content: space-evenly;
+    }
+    .statsbox h3{
+        margin:0;
     }
     .bar{
         width:85vw;

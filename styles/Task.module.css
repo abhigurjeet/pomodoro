@@ -156,8 +156,14 @@
       margin:10px auto;
       height:17vh;
       padding:0;
-      font-size:14px;
+      font-size:70%;
       text-align: center;
+      display:flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+    }
+    .tasksummary > *{
+      margin:1%;
     }
     .createtask{
       text-align: center;
@@ -202,10 +208,10 @@
     }
     .playbutton{
       position: static;
-      margin-left:65%;
+      margin-left:60%;
     }
     .deletebutton{
       position: static;
-      margin-left:14px;
+      margin-left:8%;
     }
   }

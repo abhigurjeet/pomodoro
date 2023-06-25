@@ -21,3 +21,12 @@ a h3{
 hr{
   border:2px solid white;
 }
+@media (max-width: 700px) {
+  a{
+    margin:0;
+  }
+  a h1{
+    font-size:95%;
+    text-align: center;
+  }
+}

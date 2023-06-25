@@ -6,7 +6,7 @@ export default function Stats() {
     useContext(TaskContext);
   const trainingData = Array(7).fill(0);
   const focusTime = (val) => {
-    let temp = (val * timerSettings.pomodoro.time) / 60;
+    let temp = (val * timerSettings.pomodoro) / 60;
     return `${Math.floor(temp / 60)} HR  ${temp % 60} MIN`;
   };
   let weeklySum = weeklyTomato.reduce(

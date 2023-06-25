@@ -4,10 +4,6 @@ import ActiveTask from "@/Components/Pomo/ActiveTask";
 import { useContext, useEffect } from "react";
 import { TaskContext } from "../_app";
 export default function Pomo() {
-  const { action } = useContext(TaskContext);
-  useEffect(() => {
-    action.updateTimerStatus("pomodoro");
-  }, []);
   return (
     <div>
       <Navbar />

@@ -1,23 +1,29 @@
 .timer{
   background-color:#eee;
-  margin:30px auto;
+  margin: 2% auto 0.5%;
   height:50vh;
   width:50vw;
-  text-align: center;
+  display:flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items:center;
 }
 .timer h1{
-  font-size: 100px;
   color:#1da09c;
   text-shadow:2px 2px 10px rgba(0, 0, 0, 0.3);
-  margin-top:100px;
+  font-size:500%;
 }
 .timernavbar{
   display:flex;
-  height:40px;
   justify-content:space-evenly;
+  width:100%;
+  height:7%;
 }
-.timernavbar button{
-  font-size: 15px;
+.buttonsection{
+  width:60%;
+  display:flex;
+  justify-content: space-evenly;
+  margin:0;
 }
 .inactivebutton{
   background-color:white;
@@ -35,110 +41,193 @@
   border-radius:10px;
   width:33%;
 }
-.buttonsection{
-  width:60%;
-  display:flex;
-  justify-content: space-evenly;
-  margin:auto;
-}
 .buttonsection > button {
   border: 0;
   border-radius: 50%;
-  font-size: 50px;
-  margin-top: 50px;
+  font-size: 350%;
+  padding:0;
 }
-
-.taskitem{
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+.noactivetask{
+  width:80vw;
   background-color:white;
-  margin:auto;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
   border-radius:10px;
-  width:90vw;
-  height:23vh;
+  margin:auto;
+  height:29vh;
   display:flex;
+  flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  word-wrap: break-word; 
+  text-align:center;
 }
-.taskitem div{
-  width:40%;
-  text-align: center;
+.noactivetask button{
+  background-color:#f5ba13;
+  color:white;
+  border:0;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+  border-radius:30px;
+  height:200%;
+  width:10%;
+}
+.noactivetask button:hover{
+  transform:scale(1.5);
+}
+.activetask{
+  width:85vw;
+  background-color:white;
+  border:0;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+  height:27vh;
+  border-radius:10px;
+  margin:auto;
+  padding:1%;
+  display:flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.activetaskleft{
+  width:65%;
   display:flex;
   flex-direction: column;
   justify-content: space-evenly;
   height:100%;
-  align-items: center;
 }
-.taskitem div p{
-  max-height: 130px; /* Set the maximum height */
-overflow: auto; 
+.activetaskleft p{
+  max-height:50%;
+  overflow:auto;
 }
-.taskitem div p::-webkit-scrollbar {
-  width: 8px; /* Set the width of the scrollbar */
+.activetaskleft p::-webkit-scrollbar {
+  width: 8px;
 }
-
-.taskitem div p::-webkit-scrollbar-thumb {
-  background-color: transparent; /* Set the scrollbar thumb color to transparent */
+.activetaskleft p::-webkit-scrollbar-thumb {
+  background-color: transparent;
 }
 
-.taskitem div p::-webkit-scrollbar-track {
-  background-color: transparent; /* Set the scrollbar track color to transparent */
+.activetaskleft p::-webkit-scrollbar-track {
+  background-color: transparent;
 }
-.taskitem button{
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+.activetaskright{
+  width:20%;
+  display:flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items:center;
+  height:100%;
+  font-size:150%;
+}
+.activetaskright button{
   background-color:#f5ba13;
+  color:white;
+  border:0;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
   border-radius:30px;
-    color:white;
-    border:0;
-    height:60px;
-    width:150px;
-    transition:0.3s;
+  width:50%;
+  font-size:70%;
+  
 }
-.taskitem button:hover{
-  transform: scale(1.3);
-}
-.taskitem p{ 
-  font-size: 19px;
+
+.activetaskright button:hover{
+  transform:scale(1.5);
 }
 @media (max-width: 700px) {
   .timer{
     background-color:#eee;
-    margin:30px auto 0;
-    height:50vh;
+    margin: 4% auto 2%;
     width:90vw;
-    text-align: center;
   }
   .timer h1{
-    margin-top:100px auto 30px;
+    font-size:400%;
+  }
+  .timernavbar{
+    height:7%;
   }
   .buttonsection{
     width:100%;
     display:flex;
     justify-content: space-evenly;
-    margin: auto;
+    margin:0;
   }
-  .taskitem{
-    margin-top:0;
-    display:flex;
-    flex-direction: column;
+  .inactivebutton{
+    background-color:white;
+    color:#f5ba13;
+    border:0;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+    border-radius:10px;
+    width:33%;
+  }
+  .activebutton{
+    background-color:#f5ba13;
+    color:white;
+    border:0;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+    border-radius:10px;
+    width:33%;
+  }
+  .noactivetask {
+    width:90vw;
+  }
+  .noactivetask button{
     height:100%;
-    justify-content: space-evenly;
-    align-items: center;
-    padding:10px;
+    width:30%;
     word-wrap: break-word; 
-    height:30vh;
+    padding:2%;
   }
-  .taskitem div{
-    width:100%;
+  .noactivetask button:hover{
+    transform:scale(1);
   }
-  .taskitem div p{
-    max-height: 130px; /* Set the maximum height */
-  overflow: auto; 
-  }
-  .taskitem div button{
-    height:40px;
-  }
-  .taskitem div span{
-    font-size:18px;
-  }
+
+.activetask{
+  width:95vw;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  height:33vh;
+}
+.activetaskleft{
+  width:100%;
+  display:flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height:70%;
+
+  text-align: center;
+}
+.activetaskleft p{
+  max-height:50%;
+  overflow:auto;
+}
+.activetaskleft p::-webkit-scrollbar {
+  width: 8px;
+}
+.activetaskleft p::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+
+.activetaskleft p::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+.activetaskright{
+  width:100%;
+  display:flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items:center;
+  height:100%;
+  font-size:100%;
+}
+.activetask a{
+  width:60%;
+}
+.activetaskright button{
+  background-color:#f5ba13;
+  color:white;
+  border:0;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+  border-radius:30px;
+  font-size:100%;
+  margin-left:25%;
+}
+.activetaskright button:hover{
+  transform:scale(1);
+}
 }

@@ -3,24 +3,39 @@ import styles from "@/styles/Pomo.module.css";
 import { useState, useContext } from "react";
 import { TaskContext } from "@/pages/_app";
 export default function TimerSection() {
+  const pomoPattern = [
+    "pomodoro",
+    "shortBreak",
+    "pomodoro",
+    "shortBreak",
+    "pomodoro",
+    "shortBreak",
+    "pomodoro",
+    "longBreak",
+  ];
+
+  const [patternSession, setPatternSession] = useState(0);
   const { timerSettings, action } = useContext(TaskContext);
   const [activeButton, setActiveButton] = useState("pomodoro");
-  let time;
-  for (let i in timerSettings) {
-    if (timerSettings[i].active) time = timerSettings[i]["time"];
-  }
-  const increment = () => {
+  const sessionCompleted = () => {
     if (activeButton === "pomodoro") action.incrementTomato();
+    if (timerSettings.pomoTechnique) {
+      setPatternSession((prev) => (prev + 1) % 8);
+      setActiveButton(pomoPattern[(patternSession + 1) % 8]);
+    }
+  };
+  const handleClose = () => {
+    setActiveButton("pomodoro");
   };
   const handleClick = (e) => {
     e.preventDefault();
     setActiveButton(e.target.value);
-    action.updateTimerStatus(e.target.value);
   };
   return (
     <div className={styles.timer}>
       <div className={styles.timernavbar}>
         <button
+          disabled={timerSettings.pomoTechnique}
           onClick={handleClick}
           value="pomodoro"
           className={
@@ -32,6 +47,7 @@ export default function TimerSection() {
           Pomodoro
         </button>
         <button
+          disabled={timerSettings.pomoTechnique}
           onClick={handleClick}
           value="shortBreak"
           className={
@@ -43,6 +59,7 @@ export default function TimerSection() {
           Short Break
         </button>
         <button
+          disabled={timerSettings.pomoTechnique}
           onClick={handleClick}
           value="longBreak"
           className={
@@ -55,8 +72,9 @@ export default function TimerSection() {
         </button>
       </div>
       <Timer
-        time={{ time: time, section: activeButton }}
-        increment={increment}
+        activeSession={activeButton}
+        sessionCompleted={sessionCompleted}
+        handleClose={handleClose}
       />
     </div>
   );

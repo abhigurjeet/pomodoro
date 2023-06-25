@@ -27,29 +27,23 @@ export default function Filters() {
   };
   return (
     <div className={styles.filter}>
-      <select
-        id="dropdown"
-        value={selectedStatus}
-        onChange={handleStatusChange}
-      >
-        <option value="" disabled hidden selected>
+      <select value={selectedStatus} onChange={handleStatusChange}>
+        <option value="" disabled hidden>
           Task Status
         </option>
         <option value="completed">Tasks Completed</option>
         <option value="pending">Tasks Pending</option>
         <option value="all">Total Tasks</option>
       </select>
-      <select id="dropdown" value={sortDate} onChange={handleSortDateChange}>
-        <option value="" disabled hidden selected>
+      <select value={sortDate} onChange={handleSortDateChange}>
+        <option value="" disabled hidden>
           Sort by Date
         </option>
-        <option value="ascending" selected>
-          New first
-        </option>
+        <option value="ascending">New first</option>
         <option value="descending">Older first</option>
       </select>
-      <select id="dropdown" value={sortDay} onChange={handleSortDayChange}>
-        <option value="" disabled hidden selected>
+      <select value={sortDay} onChange={handleSortDayChange}>
+        <option value="" disabled hidden>
           Sort by Day
         </option>
         <option value="today">Today</option>

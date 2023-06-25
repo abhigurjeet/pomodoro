@@ -13,7 +13,7 @@ export default function App({ Component, pageProps }) {
         estTomato: 2312,
         tomato: 0,
         createDate: new Date("01-02-1998"),
-        completedOn: new Date("06-18-2023"),
+        completedOn: new Date("06-24-2023"),
         taskStatus: "Completed",
       },
       {
@@ -23,7 +23,7 @@ export default function App({ Component, pageProps }) {
         estTomato: 23123,
         tomato: 0,
         createDate: new Date("01-02-1998"),
-        completedOn: new Date("06-18-2023"),
+        completedOn: new Date("06-23-2023"),
         taskStatus: "Completed",
       },
     ],
@@ -43,9 +43,11 @@ export default function App({ Component, pageProps }) {
       sortday: "",
     },
     timerSettings: {
-      pomodoro: { time: 25 * 60, completed: false, active: true },
-      shortBreak: { time: 5 * 60, completed: false, active: false },
-      longBreak: { time: 15 * 60, completed: false, active: false },
+      pomodoro: 25 * 60,
+      shortBreak: 5 * 60,
+      longBreak: 15 * 60,
+      pomoTechnique: false,
+      autoStart: false,
     },
     action: {
       addtask: (item) => {
@@ -54,28 +56,16 @@ export default function App({ Component, pageProps }) {
           taskList: [...prev.taskList, item],
         }));
       },
-      setActiveTask: (i, status) => {
+      updateTaskStatus: (i, status) => {
         setTaskData((prev) => {
           let temp = [...prev.taskList];
-          if (status === "Completed") {
-            temp[prev.activeTask].taskStatus = "Completed";
-            temp[prev.activeTask].completedOn = new Date();
-            return { ...prev, activeTask: i };
-          }
-          if (i === -1) {
-            if (prev.activeTask !== -1) {
-              temp[prev.activeTask].taskStatus = "Not started";
-            }
-            return { ...prev, activeTask: i };
-          }
-          if (temp[i].taskStatus === "Not started")
-            temp[i].taskStatus = "Started";
-          else temp[i].taskStatus = "Not started";
-          if (prev.activeTask !== -1) {
-            temp[prev.activeTask].taskStatus = "Not started";
-          }
-          return { ...prev, activeTask: i };
+          temp[i].taskStatus = status;
+          if (status === "Completed") temp[i].completedOn = new Date();
+          return { ...prev, taskList: temp };
         });
+      },
+      setActiveTask: (i) => {
+        setTaskData((prev) => ({ ...prev, activeTask: i }));
       },
       deleteTask: (i) => {
         setTaskData((prev) => {
@@ -117,19 +107,8 @@ export default function App({ Component, pageProps }) {
           };
         });
       },
-      updateTimerStatus: (val) => {
-        setTaskData((prev) => {
-          let temp = JSON.parse(JSON.stringify(prev.timerSettings));
-          temp.pomodoro.active = false;
-          temp.shortBreak.active = false;
-          temp.longBreak.active = false;
-          val === "pomodoro"
-            ? (temp.pomodoro.active = true)
-            : val === "shortBreak"
-            ? (temp.shortBreak.active = true)
-            : (temp.longBreak.active = true);
-          return { ...prev, timerSettings: temp };
-        });
+      updateTimerSettings: (val) => {
+        setTaskData((prev) => ({ ...prev, timerSettings: val }));
       },
     },
   });

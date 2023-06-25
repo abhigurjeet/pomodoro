@@ -35,15 +35,12 @@ export const options = {
 };
 export default function BarChart() {
   const { taskList } = useContext(TaskContext);
-
-  const dates = Array.from({ length: 7 }, (xyz, index) => {
+  const labels = Array.from({ length: 7 }, (xyz, index) => {
     let date = new Date();
     date.setDate(new Date().getDate() - index + 1);
-    return date;
-  });
-  const labels = dates.map(
-    (item) => `${item.getDate() - 1}/${item.getMonth() + 1}`
-  );
+    return `${date.getDate() - 1}/${date.getMonth() + 1}`;
+  }).reverse();
+
   const trainingData = Array(7).fill(0);
   taskList
     .filter((item, i) => item.taskStatus === "Completed")
@@ -56,7 +53,7 @@ export default function BarChart() {
       return daydiff < 7;
     });
   trainingData.reverse();
-  labels.reverse();
+
   const data = {
     labels,
     datasets: [

@@ -38,13 +38,20 @@ export default function DisplayTasks() {
 
   //EVENT HANDLERS
   const handlePlay = (i, e) => {
-    if (taskList[i].taskStatus === "Not started") action.setActiveTask(i);
-    else action.setActiveTask(-1);
-  };
-  const handleDelete = (i) => {
-    if (taskList[i].taskStatus === "Started") {
+    if (taskList[i].taskStatus === "Not started") {
+      if (activeTask !== -1) action.updateTaskStatus(activeTask, "Not started");
+      action.setActiveTask(i);
+      action.updateTaskStatus(i, "Started");
+    } else {
+      action.updateTaskStatus(i, "Not started");
       action.setActiveTask(-1);
     }
+  };
+  const handleDelete = (i) => {
+    if (activeTask === i) {
+      action.setActiveTask(-1);
+    }
+    if (activeTask > i) action.setActiveTask(activeTask - 1);
     action.deleteTask(i);
   };
 

@@ -4,44 +4,42 @@ import { AiOutlineReload, AiFillCloseCircle } from "react-icons/ai";
 import { useState, useEffect, useRef, useContext } from "react";
 import { TaskContext } from "@/pages/_app";
 
-export default function Timer(props) {
+export default function Timer({
+  activeSession,
+  sessionCompleted,
+  handleClose,
+}) {
   const { timerSettings, action, activeTask } = useContext(TaskContext);
-  const [seconds, setSeconds] = useState(props.time.time);
-  let [pause, setPause] = useState(true);
-
+  const [seconds, setSeconds] = useState(timerSettings[activeSession]);
+  const [pause, setPause] = useState(true);
   useEffect(() => {
-    setSeconds(props.time.time);
-    setPause(true);
-  }, [props.time.time, props.time.section]);
+    setSeconds(timerSettings[activeSession]);
+    if (timerSettings.autoStart && activeTask !== -1) setPause(false);
+    else setPause(true);
+  }, [activeSession]);
 
   useEffect(() => {
     let interval;
-
     if (!pause) {
       interval = setInterval(() => {
-        setSeconds((prevSeconds) => {
-          if (prevSeconds === 1 || pause) {
-            if (prevSeconds === 1) {
-              props.increment();
-            }
-            clearInterval(interval);
-            return 0;
+        setSeconds((prev) => {
+          if (prev === 1) {
+            setPause(true);
           }
-          return prevSeconds - 1;
+          return prev - 1;
         });
       }, 1000);
     }
-
+    if (seconds === 0) sessionCompleted();
     return () => {
       clearInterval(interval);
     };
   }, [pause]);
-
   const buttonDisabled = seconds === 0 || activeTask === -1;
   const buttonColor = seconds === 0 || activeTask === -1 ? "#ccc" : "#f5ba13";
 
   return (
-    <div>
+    <>
       <h1>
         {Math.floor(seconds / 60) < 10
           ? `0${Math.floor(seconds / 60)}`
@@ -50,7 +48,13 @@ export default function Timer(props) {
       </h1>
       <div className={styles.buttonsection}>
         <button
-          onClick={() => action.setActiveTask(-1)}
+          onClick={() => {
+            setPause(true);
+            setSeconds(timerSettings[activeSession]);
+            action.updateTaskStatus(activeTask, "Not started");
+            action.setActiveTask(-1);
+            handleClose();
+          }}
           disabled={activeTask === -1}
           style={{ color: activeTask === -1 ? "#ccc" : "#f5ba13" }}
         >
@@ -65,8 +69,9 @@ export default function Timer(props) {
         </button>
         <button
           onClick={() => {
-            setSeconds(props.time.time);
-            setPause(true);
+            setSeconds(timerSettings[activeSession]);
+            if (timerSettings.autoStart) setPause(false);
+            else setPause(true);
           }}
           disabled={activeTask === -1}
           style={{ color: activeTask === -1 ? "#ccc" : "#f5ba13" }}
@@ -74,6 +79,6 @@ export default function Timer(props) {
           <AiOutlineReload />
         </button>
       </div>
-    </div>
+    </>
   );
 }

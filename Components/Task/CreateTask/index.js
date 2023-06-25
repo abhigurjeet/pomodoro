@@ -1,91 +1,56 @@
 import styles from "@/styles/Task.module.css";
-import { useState, useContext } from "react";
+import { useState, useContext, useRef } from "react";
 import { TaskContext } from "@/pages/_app";
 export default function CreateTask() {
   const { action } = useContext(TaskContext);
-  const [taskDetails, setTaskDetails] = useState({
-    title: "",
-    description: "",
-    dueDate: "",
-    estTomato: "",
-    tomato: 0,
-    createDate: new Date(),
-    completedOn: "",
-    taskStatus: "Not started",
-  });
+  const titleRef = useRef(null);
+  const descriptionRef = useRef(null);
+  const dueDateRef = useRef(null);
+  const estTomatoRef = useRef(0);
   const handleSubmit = (e) => {
     e.preventDefault();
-    action.addtask(taskDetails);
-    setTaskDetails({
-      title: "",
-      description: "",
-      dueDate: "",
-      estTomato: "",
+    let taskDetails = {
+      title: titleRef.current.value,
+      description: descriptionRef.current.value,
+      dueDate: dueDateRef.current.value,
+      estTomato: estTomatoRef.current.value,
       tomato: 0,
       createDate: new Date(),
       completedOn: "",
       taskStatus: "Not started",
-    });
-  };
-  const handleDetail = (e) => {
-    switch (e.target.name) {
-      case "title":
-        setTaskDetails((prev) => {
-          return { ...prev, title: e.target.value };
-        });
-        break;
-      case "description":
-        setTaskDetails((prev) => {
-          return { ...prev, description: e.target.value };
-        });
-        break;
-      case "dueDate":
-        setTaskDetails((prev) => {
-          return { ...prev, dueDate: e.target.value };
-        });
-        break;
-      case "estTomato":
-        setTaskDetails((prev) => {
-          return { ...prev, estTomato: e.target.value };
-        });
-        break;
-      default:
-        break;
-    }
+    };
+    if (
+      taskDetails.title.trim().length &&
+      taskDetails.description.trim().length
+    )
+      action.addtask(taskDetails);
+    titleRef.current.value = "";
+    descriptionRef.current.value = "";
+    estTomatoRef.current.value = 1;
   };
   return (
     <div className={styles.createtask}>
       <form>
-        <input
-          type="text"
-          onChange={handleDetail}
-          placeholder="Title"
-          name="title"
-          value={taskDetails.title}
-        />
+        <input type="text" ref={titleRef} placeholder="Title" />
         <br />
         <input
           className={styles.description}
           type="text"
-          onChange={handleDetail}
+          ref={descriptionRef}
           placeholder="Description"
-          name="description"
-          value={taskDetails.description}
         />
         <br />
         <input
           type="date"
-          onChange={handleDetail}
-          name="dueDate"
-          value={taskDetails.dueDate}
+          ref={dueDateRef}
+          min={new Date().toISOString().split("T")[0]}
+          defaultValue={new Date().toISOString().split("T")[0]}
         />
         <br />
         <input
           type="number"
-          onChange={handleDetail}
-          name="estTomato"
-          value={taskDetails.estTomato}
-          placeholder="Est. tomatoes required"
+          ref={estTomatoRef}
+          placeholder="Est. tomato required"
         />
         <br />
         <button type="submit" onClick={handleSubmit}>
