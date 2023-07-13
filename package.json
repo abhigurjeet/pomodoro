@@ -9,15 +9,30 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@apollo/client": "^3.7.16",
+    "@auth0/nextjs-auth0": "^2.6.3",
+    "@pothos/core": "^3.30.0",
+    "@pothos/plugin-prisma": "^3.52.0",
+    "@prisma/client": "^4.16.2",
     "chart.js": "^4.3.0",
+    "date-fns": "^2.30.0",
     "eslint": "8.42.0",
     "eslint-config-next": "13.4.5",
+    "graphql": "^16.7.1",
+    "graphql-scalars": "^1.22.2",
+    "graphql-yoga": "^4.0.3",
     "grommet": "^2.32.2",
     "next": "13.4.5",
     "react": "18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "18.2.0",
+    "react-hot-toast": "^2.4.1",
     "react-icons": "^4.9.0",
+    "react-loading": "^2.0.3",
+    "react-responsive-carousel": "^3.2.23",
     "styled-components": "^5.3.11"
+  },
+  "devDependencies": {
+    "prisma": "^4.16.2"
   }
 }

@@ -1,6 +1,6 @@
 import styles from "@/styles/Task.module.css";
 import { useState, useContext } from "react";
-import { TaskContext } from "@/pages/_app";
+import { TaskContext } from "@/Components/AppContent";
 export default function TaskSummary() {
   const { taskList } = useContext(TaskContext);
   let totalTomato = 0;

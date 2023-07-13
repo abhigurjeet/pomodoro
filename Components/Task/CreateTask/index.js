@@ -1,29 +1,68 @@
 import styles from "@/styles/Task.module.css";
 import { useState, useContext, useRef } from "react";
-import { TaskContext } from "@/pages/_app";
+import { TaskContext } from "@/Components/AppContent";
+import { useUser } from "@auth0/nextjs-auth0/client";
+import { CREATE_TASK_MUTATION } from "@/Data/clientQueries";
+import { useMutation } from "@apollo/client";
+import { Toaster, toast } from "react-hot-toast";
 export default function CreateTask() {
+  const { user } = useUser();
+  const [createTaskMutation] = useMutation(CREATE_TASK_MUTATION);
   const { action } = useContext(TaskContext);
   const titleRef = useRef(null);
   const descriptionRef = useRef(null);
   const dueDateRef = useRef(null);
   const estTomatoRef = useRef(0);
-  const handleSubmit = (e) => {
+  const handleKeyDown = (e) => {
+    if (
+      e.key === "." ||
+      e.key === "+" ||
+      e.key === "-" ||
+      (e.key === "0" && e.target.value.length === 0)
+    )
+      e.preventDefault();
+  };
+  const handleSubmit = async (e) => {
     e.preventDefault();
     let taskDetails = {
       title: titleRef.current.value,
       description: descriptionRef.current.value,
-      dueDate: dueDateRef.current.value,
+      dueDate: String(new Date(dueDateRef.current.value).getTime()),
       estTomato: estTomatoRef.current.value,
       tomato: 0,
-      createDate: new Date(),
-      completedOn: "",
+      createDate: String(new Date().getTime()),
+      completedOn: null,
       taskStatus: "Not started",
     };
     if (
       taskDetails.title.trim().length &&
-      taskDetails.description.trim().length
-    )
-      action.addtask(taskDetails);
+      taskDetails.description.trim().length &&
+      Number(taskDetails.estTomato)
+    ) {
+      if (user) {
+        const temp = await toast.promise(
+          createTaskMutation({
+            variables: {
+              description: taskDetails.description,
+              email: user.email,
+              dueDate: new Date(dueDateRef.current.value).toISOString(),
+              estTomato: Number(taskDetails.estTomato),
+              title: taskDetails.title,
+              taskStatus: taskDetails.taskStatus,
+              completedOn: taskDetails.completedOn,
+            },
+          }),
+          {
+            loading: <b>Creating task...</b>,
+            success: <b>Task created</b>,
+            error: <b>Please try again. Slow internet connection.</b>,
+          }
+        );
+        action.addtask({ ...taskDetails, ...temp.data.createTask });
+      }
+    } else {
+      toast.error("Please enter all the details to create task");
+    }
     titleRef.current.value = "";
     descriptionRef.current.value = "";
     estTomatoRef.current.value = 1;
@@ -50,6 +89,7 @@ export default function CreateTask() {
         <input
           type="number"
           ref={estTomatoRef}
+          onKeyDown={handleKeyDown}
           placeholder="Est. tomato required"
         />
         <br />
@@ -58,6 +98,7 @@ export default function CreateTask() {
           task
         </button>
       </form>
+      <Toaster />
     </div>
   );
 }

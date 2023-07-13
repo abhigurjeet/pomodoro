@@ -2,22 +2,34 @@ import styles from "@/styles/Pomo.module.css";
 import { HiPlay, HiPause } from "react-icons/hi";
 import { AiOutlineReload, AiFillCloseCircle } from "react-icons/ai";
 import { useState, useEffect, useRef, useContext } from "react";
-import { TaskContext } from "@/pages/_app";
+import { useMutation } from "@apollo/client";
+import {
+  UPDATE_ACTIVE_TASK_MUTATION,
+  UPDATE_TASK_STATUS_MUTATION,
+} from "@/Data/clientQueries";
+import { TaskContext } from "@/Components/AppContent";
+import Loader from "@/Components/Loader";
 
 export default function Timer({
   activeSession,
   sessionCompleted,
   handleClose,
 }) {
-  const { timerSettings, action, activeTask } = useContext(TaskContext);
+  const { timerSettings, action, tomatoDetails } = useContext(TaskContext);
   const [seconds, setSeconds] = useState(timerSettings[activeSession]);
+  const [updateTaskStatusMutation] = useMutation(UPDATE_TASK_STATUS_MUTATION);
+  const [updateActiveTaskMutation] = useMutation(UPDATE_ACTIVE_TASK_MUTATION);
   const [pause, setPause] = useState(true);
+
   useEffect(() => {
     setSeconds(timerSettings[activeSession]);
-    if (timerSettings.autoStart && activeTask !== -1) setPause(false);
+    if (timerSettings.autoStart && tomatoDetails.activeTask !== -1)
+      setPause(false);
     else setPause(true);
   }, [activeSession]);
-
+  useEffect(() => {
+    setSeconds(timerSettings[activeSession]);
+  }, [timerSettings[activeSession]]);
   useEffect(() => {
     let interval;
     if (!pause) {
@@ -35,8 +47,14 @@ export default function Timer({
       clearInterval(interval);
     };
   }, [pause]);
-  const buttonDisabled = seconds === 0 || activeTask === -1;
-  const buttonColor = seconds === 0 || activeTask === -1 ? "#ccc" : "#f5ba13";
+  if (
+    Object.keys(tomatoDetails).length === 0 ||
+    Object.keys(timerSettings).length === 0
+  )
+    return <Loader />;
+  const buttonDisabled = seconds === 0 || tomatoDetails.activeTask === -1;
+  const buttonColor =
+    seconds === 0 || tomatoDetails.activeTask === -1 ? "#ccc" : "#f5ba13";
 
   return (
     <>
@@ -51,12 +69,27 @@ export default function Timer({
           onClick={() => {
             setPause(true);
             setSeconds(timerSettings[activeSession]);
-            action.updateTaskStatus(activeTask, "Not started");
+            updateTaskStatusMutation({
+              variables: {
+                id: Number(tomatoDetails.activeTask),
+                taskStatus: "Not started",
+                completedOn: null,
+              },
+            });
+            updateActiveTaskMutation({
+              variables: {
+                id: Number(tomatoDetails.id),
+                activeTask: -1,
+              },
+            });
+            action.updateTaskStatus(tomatoDetails.activeTask, "Not started");
             action.setActiveTask(-1);
             handleClose();
           }}
-          disabled={activeTask === -1}
-          style={{ color: activeTask === -1 ? "#ccc" : "#f5ba13" }}
+          disabled={tomatoDetails.activeTask === -1}
+          style={{
+            color: tomatoDetails.activeTask === -1 ? "#ccc" : "#f5ba13",
+          }}
         >
           <AiFillCloseCircle />
         </button>
@@ -73,8 +106,10 @@ export default function Timer({
             if (timerSettings.autoStart) setPause(false);
             else setPause(true);
           }}
-          disabled={activeTask === -1}
-          style={{ color: activeTask === -1 ? "#ccc" : "#f5ba13" }}
+          disabled={tomatoDetails.activeTask === -1}
+          style={{
+            color: tomatoDetails.activeTask === -1 ? "#ccc" : "#f5ba13",
+          }}
         >
           <AiOutlineReload />
         </button>

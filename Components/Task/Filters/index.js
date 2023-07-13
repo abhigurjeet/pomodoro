@@ -1,7 +1,7 @@
 import styles from "@/styles/Task.module.css";
 import { BiFilterAlt } from "react-icons/bi";
 import { useState, useContext } from "react";
-import { TaskContext } from "@/pages/_app";
+import { TaskContext } from "@/Components/AppContent";
 export default function Filters() {
   const [selectedStatus, setSelectedStatus] = useState("");
   const [sortDate, setSortedDate] = useState("");

@@ -1,7 +1,8 @@
 import Timer from "./Timer";
 import styles from "@/styles/Pomo.module.css";
 import { useState, useContext } from "react";
-import { TaskContext } from "@/pages/_app";
+import { TaskContext } from "@/Components/AppContent";
+import { useMutation } from "@apollo/client";
 export default function TimerSection() {
   const pomoPattern = [
     "pomodoro",
@@ -15,10 +16,14 @@ export default function TimerSection() {
   ];
 
   const [patternSession, setPatternSession] = useState(0);
-  const { timerSettings, action } = useContext(TaskContext);
+  const { timerSettings, action, tomatoDetails, taskList } =
+    useContext(TaskContext);
   const [activeButton, setActiveButton] = useState("pomodoro");
+
   const sessionCompleted = () => {
-    if (activeButton === "pomodoro") action.incrementTomato();
+    if (activeButton === "pomodoro") {
+      action.incrementTomato();
+    }
     if (timerSettings.pomoTechnique) {
       setPatternSession((prev) => (prev + 1) % 8);
       setActiveButton(pomoPattern[(patternSession + 1) % 8]);

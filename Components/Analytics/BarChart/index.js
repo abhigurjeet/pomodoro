@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { TaskContext } from "@/pages/_app";
+import { TaskContext } from "@/Components/AppContent";
 import styles from "@/styles/Analytics.module.css";
 import React from "react";
 import {
@@ -47,7 +47,11 @@ export default function BarChart() {
     .filter((item) => {
       const millisecondsPerDay = 24 * 60 * 60 * 1000;
       const daydiff = Math.floor(
-        (new Date() - item.completedOn) / millisecondsPerDay
+        (new Date().getTime() -
+          new Date(
+            Number(item.completedOn) - new Date().getTimezoneOffset()
+          ).getTime()) /
+          millisecondsPerDay
       );
       if (daydiff < 7 && daydiff > -1) ++trainingData[daydiff];
       return daydiff < 7;

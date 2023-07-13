@@ -7,7 +7,7 @@ export default function NavBar() {
   return (
     <div className={styles.header}>
       <Link href="/">
-        <h1>Task Management App</h1>
+        <h1>Pomodoro</h1>
       </Link>
       <div className={styles.navbar}>
         <Link href="/pomo">
