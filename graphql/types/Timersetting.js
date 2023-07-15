@@ -1,5 +1,5 @@
 import { builder } from "../builder";
-
+import prisma from "@/lib/prisma";
 builder.prismaObject("Timersetting", {
   fields: (t) => ({
     id: t.exposeID("id"),

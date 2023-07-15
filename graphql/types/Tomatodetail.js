@@ -1,5 +1,5 @@
-import { QueryManager } from "@apollo/client/core/QueryManager";
 import { builder } from "../builder";
+import prisma from "@/lib/prisma";
 
 builder.prismaObject("Tomatodetail", {
   fields: (t) => ({
